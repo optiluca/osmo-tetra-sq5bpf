@@ -43,6 +43,11 @@
 #include "tetra_sds.h"
 #include <math.h>
 
+int	tetra_hack_all_sds_as_text;
+int tetra_hack_rxid;
+int tetra_hack_socklen;
+int	tetra_hack_live_socket;
+struct sockaddr_in tetra_hack_live_sockaddr;
 
 const char oth_reserved[]="Other Reserved";
 

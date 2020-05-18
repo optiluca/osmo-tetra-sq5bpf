@@ -103,6 +103,22 @@ void show_help(char *prog)
 
 }
 
+
+
+
+int tetra_hack_reassemble_fragments;
+int	tetra_hack_allow_encrypted;
+int	tetra_hack_live_idx;
+int	tetra_hack_live_lastseen;
+
+struct fragslot fragslots[FRAGSLOT_NR_SLOTS];
+struct tetra_hack_struct tetra_hack_db[HACK_NUM_STRUCTS];
+uint16_t tetra_hack_la;
+uint32_t tetra_hack_dl_freq, tetra_hack_ul_freq;
+
+uint8_t  tetra_hack_freq_band;
+uint8_t  tetra_hack_freq_offset;
+
 int main(int argc, char **argv)
 {
 	int fd;
@@ -118,9 +134,12 @@ int main(int argc, char **argv)
 	int ccounter=0;
 	char tmpstr2[64];
 
-	tetra_hack_reassemble_fragments=0;
-	tetra_hack_all_sds_as_text=0;
-	tetra_hack_allow_encrypted=0;
+    tetra_hack_reassemble_fragments = 0;
+    tetra_hack_all_sds_as_text = 0;
+    tetra_hack_allow_encrypted = 0;
+    tetra_hack_live_idx=0;
+    tetra_hack_live_lastseen=0;
+    tetra_hack_live_socket=0;
 
 
 	while ((opt = getopt(argc, argv, "ihf:F:arse")) != -1) {
@@ -170,9 +189,6 @@ int main(int argc, char **argv)
 	}
 	/* sq5bpf */
 	memset((void *)&tetra_hack_db,0,sizeof(tetra_hack_db));
-	tetra_hack_live_idx=0;
-	tetra_hack_live_lastseen=0;
-	tetra_hack_live_socket=0;
 
 	if (getenv("TETRA_HACK_PORT")) {
 		tetra_hack_rxid=atoi(getenv("TETRA_HACK_RXID"));
