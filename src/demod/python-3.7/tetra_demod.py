@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 
 import sys
 import math
@@ -8,11 +8,11 @@ from optparse import OptionParser
 
 # Load it locally or from the module
 try:
-    import cqpsk
+    from . import cqpsk
 except:
-    from tetra_demod import cqpsk
+    import cqpsk
 
-# accepts an input file in complex format 
+# accepts an input file in complex format
 # applies frequency translation, resampling (interpolation/decimation)
 
 class my_top_block(gr.top_block):
@@ -28,7 +28,7 @@ class my_top_block(gr.top_block):
         parser.add_option("-s", "--sample-rate", type="int", default=100000000/512, help="input sample rate")
         parser.add_option("-v", "--verbose", action="store_true", default=False, help="dump demodulation data")
         (options, args) = parser.parse_args()
- 
+
         sample_rate = options.sample_rate
         symbol_rate = 18000
         sps = 2
